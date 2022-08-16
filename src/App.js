@@ -1,25 +1,87 @@
-import logo from './logo.svg';
-import './App.css';
+import { render } from '@testing-library/react';
+import React , {component} from 'react'
+import profilecard from './components/profilecard'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends component {
+  constructor(){
+  supper();
+
+  this.handleclick=this.handleclick.bind(this)
+
+  this.state={
+    writer:{
+      londing:false,
+      list:[]
+    }
+  };
+
+this.handleclick(){
+  this.setstate({
+    writer:{
+      loading:true,
+    }
+  });
+  setTimeout(async()=> {
+    let resp=await("/writers.json");
+    let result =await resp.json()
+
+  })
+
+  this.setstate({
+    writers:{
+      loading:false,
+      list:result
+    }
+  });
+
+
+
+  }
+
 }
 
-export default App;
+ render(){
+  const {
+    writers:{loading,  list}
+  }=this.state;
+
+  
+ }
+
+ if(loading){
+ return (
+
+    <div>
+    <h1>writers profilr</h1>
+    <div className="container">
+    <div className="card action">
+    <p className="infotext"> loading...</p>
+
+    </div> 
+
+    </div>
+    </div>
+  )
+ }
+
+ 
+   
+} 
+return (
+
+  <div>
+  <h1>writers profilr</h1>
+  <div className="container">
+  list.length === 0 ?
+    
+    
+  <div className="card action">
+  <p className="infotext"> oops...no writer profile found</p>
+  <button className= 'actionBtn' onclick={this.handleclick}>Get writers</button>
+
+  </div> 
+  
+  </div>
+  </div>
+  )
+export default App
